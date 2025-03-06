@@ -6,7 +6,7 @@ use App\Utils\BaseTest;
 
 class MainTest extends BaseTest
 {
-    public function testLogin()
+    public function goToPage()
     {
         try {
             echo "Logged in successfully.\n";
@@ -19,7 +19,7 @@ class MainTest extends BaseTest
             echo "Current URL: " . $this->driver->getCurrentURL() . "\n";
 
         } catch (\Exception $e) {
-            echo "Test failed: " . $e->getMessage() . "\n";
+            echo "MainTest failed: " . $e->getMessage() . "\n";
             throw $e;
         }
     }

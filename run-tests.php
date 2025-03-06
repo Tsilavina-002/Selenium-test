@@ -1,16 +1,22 @@
 <?php
 require 'vendor/autoload.php';
 use App\Tests\MainTest; // Import the MainTest class
+use App\Tests\SearchMemberTest;
 
 try {
-    // Run the test
-    $test = new MainTest();
-    $test->testLogin();
+    // $test = new MainTest();
+    // $test->goToPage();
+
+    $formFillingTest = new SearchMemberTest();
+    $formFillingTest->testSearchMember();
+
 } catch (\Exception $e) {
-    echo "Test failed: " . $e->getMessage() . "\n";
+    echo "\nTest failed: " . $e->getMessage() . "\n";
 } finally {
-    echo "Waiting for 5 seconds before closing the browser...\n";
+    echo "\nWaiting for 5 seconds before closing the browser...\n";
     // Ensure the browser is closed, even if an error occurs
     sleep(5);
-    $test->tearDown();
+    
+    // $test->tearDown();
+    $formFillingTest->tearDown();
 }
