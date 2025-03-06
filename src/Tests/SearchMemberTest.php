@@ -22,24 +22,37 @@ class SearchMemberTest extends BaseTest
             $submitButton = $this->driver->findElement(WebDriverBy::cssSelector('button[type="submit"]'));
             $submitButton->click();
 
-            // Wait for the results to load (optional but recommended to ensure the page is ready)
-            $wait = new WebDriverWait($this->driver, 10);  // Wait up to 10 seconds
-            $wait->until(WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::tagName('tbody'))); // Wait until <tbody> is present
+            // Wait for the table to load
+            $wait = new WebDriverWait($this->driver, 10);
+            $table = $wait->until(
+                WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('table.table.table-bordered.table-condensed.table-hover tbody'))
+            );
 
-            // Find the <tbody> element
-            $tbody = $this->driver->findElement(WebDriverBy::tagName('tbody'));
+            // Count the rows in the tbody
+            $rows = $table->findElements(WebDriverBy::cssSelector('tr'));
 
-            // Count the number of <tr> elements inside <tbody>
-            $rows = $tbody->findElements(WebDriverBy::tagName('tr'));
+            if (count($rows) === 1) {
+                // Check if the row contains the "no results" message
+                $noResultsRow = $rows[0];
+                $noResultsText = $noResultsRow->findElement(WebDriverBy::cssSelector('td div strong'))->getText();
 
-            // Check if the result is empty (e.g., no matching records)
-            if (count($rows) == 1 && $rows[0]->getText() == "page 1/0 - 0 records") {
-                echo "No results found.\n";
+                if (strpos($noResultsText, '0 records') !== false) {
+                    echo "No results found.\n";
+                } else {
+                    echo "Unexpected result: " . $noResultsText . "\n";
+                }
             } else {
                 echo "Number of rows found: " . count($rows) . "\n";
-                // You can now perform further operations based on the number of rows
+
+                // Process the rows
+                foreach ($rows as $row) {
+                    $cells = $row->findElements(WebDriverBy::cssSelector('td'));
+                    foreach ($cells as $cell) {
+                        echo $cell->getText() . "\t";
+                    }
+                    echo "\n";
+                }
             }
-            
             echo "Search done!\n";
         } catch (\Exception $e) {
             echo "SearchMemberTest failed: " . $e->getMessage() . "\n";
