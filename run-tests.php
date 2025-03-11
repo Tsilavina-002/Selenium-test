@@ -1,15 +1,18 @@
 <?php
 require 'vendor/autoload.php';
-use App\Tests\MainTest; // Import the MainTest class
+use App\Tests\MainTest;
 use App\Tests\SearchMemberTest;
+use App\Tests\ReportFinancialTest;
 
 try {
     // $test = new MainTest();
     // $test->goToPage();
 
-    $formFillingTest = new SearchMemberTest();
-    $formFillingTest->testSearchMember('softi');
+    // $formFillingTest = new SearchMemberTest();
+    // $formFillingTest->testSearchMember('softi');
 
+    $reportFinancial = new ReportFinancialTest();
+    $reportFinancial->filterReport('01-03-2016', '31-03-2021');
 } catch (\Exception $e) {
     echo "\nTest failed: " . $e->getMessage() . "\n";
 } finally {
@@ -18,5 +21,6 @@ try {
     sleep(5);
     
     // $test->tearDown();
-    $formFillingTest->tearDown();
+    // $formFillingTest->tearDown();
+    $reportFinancial->tearDown();
 }
