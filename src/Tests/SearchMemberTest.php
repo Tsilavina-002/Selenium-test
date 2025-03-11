@@ -1,7 +1,6 @@
 <?php
 namespace App\Tests;
 
-use App\Utils\Config;
 use App\Utils\BaseTest;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverWait;
@@ -9,15 +8,12 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 
 class SearchMemberTest extends BaseTest
 {
-    public function testSearchMember()
+    public function testSearchMember($prenom)
     {
         try {
-            // Navigate to the form page
-            // $this->driver->get(Config::DOMAIN . '/form-page');
-
             echo "Filling search field...";
             $nameField = $this->driver->findElement(WebDriverBy::id('mas_partner_searchform_firstname'));
-            $nameField->sendKeys('softi');
+            $nameField->sendKeys($prenom);
 
             $submitButton = $this->driver->findElement(WebDriverBy::cssSelector('button[type="submit"]'));
             $submitButton->click();

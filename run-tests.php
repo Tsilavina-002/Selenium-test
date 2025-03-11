@@ -8,13 +8,13 @@ try {
     // $test->goToPage();
 
     $formFillingTest = new SearchMemberTest();
-    $formFillingTest->testSearchMember();
+    $formFillingTest->testSearchMember('softi');
 
 } catch (\Exception $e) {
     echo "\nTest failed: " . $e->getMessage() . "\n";
 } finally {
-    echo "\nWaiting for 5 seconds before closing the browser...\n";
     // Ensure the browser is closed, even if an error occurs
+    echo "\nWaiting for 5 seconds before closing the browser...\n";
     sleep(5);
     
     // $test->tearDown();
